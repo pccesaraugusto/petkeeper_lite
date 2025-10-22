@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "317771367093",
+    "firebase_url": "https://petkeepr-ad816-default-rtdb.firebaseio.com",
+    "project_id": "petkeepr-ad816",
+    "storage_bucket": "petkeepr-ad816.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317771367093:android:80489e1b0eb558563c74fc",
+        "android_client_info": {
+          "package_name": "com.example.petkeeper_lite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwaTrUfTnp0Y6jmLRxq_4Ahlwt6JrCR0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317771367093:android:6c5ed723c78b968c3c74fc",
+        "android_client_info": {
+          "package_name": "com.pccesaraugusto.petkeeper_lite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwaTrUfTnp0Y6jmLRxq_4Ahlwt6JrCR0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

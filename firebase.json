@@ -1,0 +1,32 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "petkeepr-ad816",
+          "appId": "1:317771367093:android:80489e1b0eb558563c74fc",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "petkeepr-ad816",
+          "configurations": {
+            "android": "1:317771367093:android:80489e1b0eb558563c74fc",
+            "ios": "1:317771367093:ios:71deef6598d72ab73c74fc",
+            "web": "1:317771367093:web:906e54159c7940a13c74fc"
+          }
+        }
+      }
+    }
+  },
+  "emulators": {
+    "database": {
+      "port": 9000
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  }
+}
