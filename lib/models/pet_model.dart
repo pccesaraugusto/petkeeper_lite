@@ -24,13 +24,14 @@ class Pet {
   factory Pet.fromMap(String id, Map<String, dynamic> data) {
     return Pet(
       id: id,
-      familyCode: data['familyCode'],
-      name: data['name'],
-      species: data['species'],
-      birthDate: (data['birthDate'] as Timestamp).toDate(),
-      weightKg: data['weightKg'].toDouble(),
-      photoUrl: data['photoUrl'],
-      createdAt: (data['createdAt'] as Timestamp).toDate(),
+      familyCode: data['familyCode'] as String? ?? '',
+      name: data['name'] as String? ?? '',
+      species: data['species'] as String? ?? '',
+      birthDate:
+          (data['birthDate'] as Timestamp?)?.toDate() ?? DateTime(2000, 1, 1),
+      weightKg: (data['weightKg'] as num?)?.toDouble() ?? 0.0,
+      photoUrl: data['photoUrl'] as String? ?? '',
+      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
     );
   }
 

@@ -1,7 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/pet_provider.dart';
-import '../models/pet_model.dart';
 import 'pet_detail_screen.dart';
 
 class PetListScreen extends ConsumerWidget {
@@ -30,7 +30,15 @@ class PetListScreen extends ConsumerWidget {
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Erro ao carregar pets: $e')),
+        error: (e, _) {
+          if (e is FirebaseException) {
+            debugPrint('Erro Firebase: ${e.message}');
+          } else {
+            debugPrint('Erro desconhecido: ${e.toString()}');
+          }
+          print('Erro desconhecido: ${e.toString()}');
+          return Center(child: Text('Erro ao carregar pets: ${e.toString()}'));
+        },
       ),
     );
   }

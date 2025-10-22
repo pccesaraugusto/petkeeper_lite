@@ -11,10 +11,17 @@ class PetDetailScreen extends ConsumerWidget {
 
   void notifyFamily(BuildContext context, WidgetRef ref) async {
     final service = NotificationService();
-    await service.notifyFamily(pet.id, 'Nova atualização para ${pet.name}');
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Família avisada!')));
+    try {
+      await service.notifyFamily(pet.id, 'Nova atualização para ${pet.name}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Família avisada!')),
+      );
+    } catch (e) {
+      print('Erro ao notificar família: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Erro ao avisar a família')),
+      );
+    }
   }
 
   @override
@@ -42,8 +49,10 @@ class PetDetailScreen extends ConsumerWidget {
                     .toList(),
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) =>
-                  Center(child: Text('Erro ao carregar tarefas: $e')),
+              error: (e, _) {
+                print('Erro ao carregar tarefas: $e');
+                return Center(child: Text('Erro ao carregar tarefas: $e'));
+              },
             ),
           ),
         ],

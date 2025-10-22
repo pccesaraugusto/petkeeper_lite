@@ -1,30 +1,37 @@
 rules_version = '2';
 service cloud.firestore {
-  match /databases/{db}/documents {
+  match /databases/{database}/documents {
+
+    // Função para obter o código da família do usuário logado
     function userFamily() {
-      return get(/databases/$(db)/documents/users/$(request.auth.uid)).data.familyCode;
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.familyCode;
     }
 
+    // Permitir leitura e escrita apenas para o próprio usuário
     match /users/{uid} {
       allow read, write: if request.auth != null && uid == request.auth.uid;
     }
 
+    // Permitir acesso à família se o código bater
     match /families/{familyCode} {
       allow read, write: if request.auth != null && familyCode == userFamily();
     }
 
+    // Permitir acesso aos pets da família
     match /pets/{petId} {
       allow read, write: if request.auth != null &&
-        request.resource.data.familyCode == userFamily();
+        resource.data.familyCode == userFamily();
     }
 
+    // Permitir acesso às tarefas dos pets da família
     match /pet_tasks/{taskId} {
       allow read, write: if request.auth != null &&
         request.resource.data.petId in getFamilyPetIds();
     }
 
+    // Função auxiliar (opcional) para validar petId
     function getFamilyPetIds() {
-      return []; // validação simples via familyCode
+      return []; // ou implemente lógica se quiser validar petId
     }
   }
 }
