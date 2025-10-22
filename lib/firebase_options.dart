@@ -26,18 +26,18 @@ class DefaultFirebaseOptions {
         return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+          'DefaultFirebaseOptions have not been configured for macOS - '
+          'you can reconfigure this by running the FlutterFire CLI novamente.',
         );
       case TargetPlatform.windows:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+          'DefaultFirebaseOptions have not been configured for Windows - '
+          'you can reconfigure this by running the FlutterFire CLI novamente.',
         );
       case TargetPlatform.linux:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+          'DefaultFirebaseOptions have not been configured for Linux - '
+          'you can reconfigure this by running the FlutterFire CLI novamente.',
         );
       default:
         throw UnsupportedError(
@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
     projectId: 'petkeepr-ad816',
     authDomain: 'petkeepr-ad816.firebaseapp.com',
     databaseURL: 'https://petkeepr-ad816-default-rtdb.firebaseio.com',
-    storageBucket: 'petkeepr-ad816.firebasestorage.app',
+    storageBucket: 'petkeepr-ad816.appspot.com',
     measurementId: 'G-BVHQQSM52S',
   );
 
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '317771367093',
     projectId: 'petkeepr-ad816',
     databaseURL: 'https://petkeepr-ad816-default-rtdb.firebaseio.com',
-    storageBucket: 'petkeepr-ad816.firebasestorage.app',
+    storageBucket: 'petkeepr-ad816.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -72,8 +72,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '317771367093',
     projectId: 'petkeepr-ad816',
     databaseURL: 'https://petkeepr-ad816-default-rtdb.firebaseio.com',
-    storageBucket: 'petkeepr-ad816.firebasestorage.app',
+    storageBucket: 'petkeepr-ad816.appspot.com',
     iosBundleId: 'com.example.petkeeperLite',
   );
-
 }
