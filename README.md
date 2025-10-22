@@ -1,16 +1,66 @@
-# petkeeper_lite
+## O que o app faz
+# Autenticação com e-mail/senha via Firebase Auth
+# Cadastro de pets com foto (Firestore + Storage)
+# Adição de vacinas/tarefas por pet (Firestore)
+# Compartilhamento por familyCode
+# Notificação push via FCM e Cloud Function
+# Sincronização em tempo real com streams Firestore
 
-A new Flutter project.
+## Fluxo de UX:
+# Onboarding → usuário define ou entra com familyCode
+# Lista de Pets → adicionar pet com foto
+# Detalhe do Pet → adicionar vacina/tarefa
+# Avisar Família → botão dispara push via notifyFamily
 
-## Getting Started
+## Critérios de Aceite (Checklist)
+# [x] Login com e-mail/senha funcional
+# [x] Definição de familyCode e isolamento por família
+# [x] CRUD de pets + upload de foto
+# [x] CRUD de vacinas/tarefas com sync em tempo real
+# [x] Push via notifyFamily entre dois devices
+# [x] Regras Firestore/Storage impedem acesso sem Auth
+# [x] README com setup, comandos e vídeo
 
-This project is a starting point for a Flutter application.
+## Entregáveis
+# Repositório com:
+# /lib: app Flutter
+# /functions: Cloud Functions
 
-A few resources to get you started if this is your first Flutter project:
+## README com:
+# Setup Firebase + emuladores
+# Comandos: flutter run, firebase emulators:start
+# Link do vídeo (≤8 min)
+# Seção "Como usei o Cursor"
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Uso do Cursor
+# Prompts usados:
+# Crie um widget de login com Firebase Auth usando Riverpod
+# Gere um provider para pets com Firestore stream filtrado por familyCode
+# Crie uma função Firebase que envia push para todos os membros da família
+# Gere um serviço para upload de imagem no Firebase Storage
+# Crie um widget para adicionar tarefas por pet com validação
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Ajustes manuais:
+# Segurança nas regras Firestore
+# Validação de familyCode nas writes
+# Tratamento de erros e estados de UI
+# Testes unitários e de widget
+
+## CRUDs Implementados
+# Pets:
+# createPet(Pet pet)
+# updatePet(Pet pet)
+# deletePet(String petId)
+# getPetsStream(String familyCode)
+
+## Tarefas:
+# createTask(PetTask task)
+# updateTask(PetTask task)
+# deleteTask(String taskId)
+# getTasksStream(String petId)
+
+## Usuário:
+# registerUser(email, password)
+# loginUser(email, password)
+# saveFamilyCode(uid, code)
+# saveFcmToken(uid, token)
