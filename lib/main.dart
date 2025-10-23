@@ -3,14 +3,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// Telas do app
-import 'package:petkeeper_lite/screens/login_screen.dart';
-import 'package:petkeeper_lite/screens/tasks_screen.dart';
-import 'package:petkeeper_lite/screens/notify_family_screen.dart';
+import 'screens/login_screen.dart';
+import 'screens/tasks_screen.dart';
+import 'screens/notify_family_screen.dart';
+import 'screens/task_crud_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: const FirebaseOptions(
       apiKey: 'AIzaSyAwaTrUfTnp0Y6jmLRxq_4Ahlwt6JrCR0s',
@@ -21,7 +20,6 @@ void main() async {
       appId: '1:317771367093:web:6c5ed723c78b968c3c74fc',
     ),
   );
-
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -38,6 +36,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => const AuthGate(),
         '/tasks': (context) => const TasksScreen(),
         '/notify': (context) => const NotifyFamilyScreen(),
+        '/crud': (context) => const TaskCrudScreen(),
         '/login': (context) => const LoginScreen(),
       },
     );
@@ -54,8 +53,7 @@ class AuthGate extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
+              body: Center(child: CircularProgressIndicator()));
         } else if (snapshot.hasData) {
           return const TasksScreen();
         } else {

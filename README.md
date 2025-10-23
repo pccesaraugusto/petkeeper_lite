@@ -167,3 +167,13 @@ Deploy e Emuladores
 [x] firebase emulators:start testado
 
 [x] firebase deploy --only firestore,storage,functions pronto para produção
+
+Com isso, você tem um CRUD completo de tarefas com:
+
+🔐 Filtro por usuário logado
+
+✏️ Edição inline
+
+🗑 Exclusão com um clique
+
+📋 Integração total com Firestore

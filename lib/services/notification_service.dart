@@ -1,10 +1,18 @@
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class NotificationService {
-  final FirebaseFunctions _functions = FirebaseFunctions.instance;
+Future<void> enviarNotificacao(String petId, String mensagem) async {
+  final url = Uri.parse('https://petkeeper-lite.onrender.com/notifyFamily');
 
-  Future<void> notifyFamily(String petId, String message) async {
-    final HttpsCallable callable = _functions.httpsCallable('notifyFamily');
-    await callable.call(<String, dynamic>{'petId': petId, 'message': message});
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({'petId': petId, 'mensagem': mensagem}),
+  );
+
+  if (response.statusCode == 200) {
+    print('✅ Notificação enviada com sucesso!');
+  } else {
+    print('❌ Erro: ${response.statusCode} - ${response.body}');
   }
 }
