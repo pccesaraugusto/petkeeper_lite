@@ -6,14 +6,14 @@ const app = express();
 
 // ✅ Configuração de CORS para permitir chamadas do Flutter Web
 app.use(cors({
-  origin: true, // ou substitua por 'http://localhost:56085' se quiser restringir
+  origin: true, // ou substitua por 'http://localhost:57224' se quiser restringir
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type']
 }));
 
 app.use(express.json());
 
-// 🔐 Carrega e corrige a chave do Firebase vinda da variável de ambiente
+// ✅ Carrega e corrige a chave do Firebase vinda da variável de ambiente
 const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
 serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
@@ -23,7 +23,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-// 🚀 Rota principal
+// ✅ Rota principal para notificar a família
 app.post('/notifyFamily', async (req, res) => {
   const { petId, mensagem } = req.body;
 
@@ -45,7 +45,12 @@ app.post('/notifyFamily', async (req, res) => {
   }
 });
 
-// 🔊 Inicia o servidor
+// ✅ Rota de teste opcional
+app.get('/', (req, res) => {
+  res.send('🚀 API PetKeepr está rodando com sucesso!');
+});
+
+// ✅ Inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
