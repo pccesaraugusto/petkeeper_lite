@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // Inicializa o Firebase Admin com sua chave
-const serviceAccount = require('./serviceAccountKey.json');
+const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
