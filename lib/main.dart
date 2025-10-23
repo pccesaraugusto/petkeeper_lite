@@ -1,32 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/login_screen.dart';
-import 'firebase_options.dart'; // Gerado pelo Firebase CLI
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:petkeeper_lite/firebase/notify_family_screen.dart';
+import 'package:petkeeper_lite/screens/login_screen.dart';
+import 'package:petkeeper_lite/screens/tasks_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  // Configuração dos emuladores Firebase
-  //const emulatorHost = 'localhost';
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyAwaTrUfTnp0Y6jmLRxq_4Ahlwt6JrCR0s',
+      authDomain: 'petkeepr-ad816.firebaseapp.com',
+      projectId: 'petkeepr-ad816',
+      storageBucket: 'petkeepr-ad816.appspot.com',
+      messagingSenderId: '317771367093',
+      appId:
+          '1:317771367093:web:6c5ed723c78b968c3c74fc', // ← corrigido para versão Web
+    ),
+  );
 
-  /*FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
-  FirebaseAuth.instance.useAuthEmulator(emulatorHost, 9099);
-  FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);*/
-
-  runApp(const ProviderScope(child: PetKeeperApp()));
+  runApp(const MyApp());
 }
 
-class PetKeeperApp extends StatelessWidget {
-  const PetKeeperApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'PetKeeper Lite',
-      theme: ThemeData(primarySwatch: Colors.teal),
-      home: const LoginScreen(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const AuthGate(),
+        '/tasks': (context) => const TasksScreen(),
+        '/notify': (context) => const NotifyFamilyScreen(),
+        '/login': (context) => const LoginScreen(),
+      },
+    );
+  }
+}
+
+class AuthGate extends StatelessWidget {
+  const AuthGate({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        } else if (snapshot.hasData) {
+          return const TasksScreen(); // Usuário logado
+        } else {
+          return const LoginScreen(); // Usuário não logado
+        }
+      },
     );
   }
 }
