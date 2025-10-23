@@ -1,29 +1,25 @@
 {
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "firebase-admin": "^13.5.0"
-  },
   "name": "petkeeper_lite",
   "version": "1.0.0",
-  "description": "App Flutter com Firebase para cadastro compartilhado de pets e controle de vacinas/tarefas.",
+  "description": "API Node.js para integração com Firebase, usada pelo app Flutter PetKeeper Lite.",
   "main": "index.js",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
+  "keywords": ["express", "firebase", "api", "petkeeper"],
+  "author": "Paulo Cesar Augusto",
+  "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pccesaraugusto/petkeeper_lite.git"
+    "url": "https://github.com/pccesaraugusto/petkeeper_lite.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/pccesaraugusto/petkeeper_lite/issues"
   },
-  "homepage": "https://github.com/pccesaraugusto/petkeeper_lite#readme"
+  "homepage": "https://github.com/pccesaraugusto/petkeeper_lite#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "firebase-admin": "^13.5.0"
+  }
 }
