@@ -6,16 +6,20 @@ const app = express();
 
 // ✅ Configuração de CORS para permitir chamadas do Flutter Web
 app.use(cors({
-  origin: true, // ou substitua por 'http://localhost:57224' se quiser restringir
+  origin: ['http://localhost:57224', 'https://seu-dominio.com'], // ajuste conforme necessário
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: ['Content-Type'],
+  credentials: true
 }));
 
 app.use(express.json());
 
 // ✅ Carrega e corrige a chave do Firebase vinda da variável de ambiente
-const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
-serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG || '{}');
+
+if (serviceAccount.private_key) {
+  serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -28,7 +32,7 @@ app.post('/notifyFamily', async (req, res) => {
   const { petId, mensagem } = req.body;
 
   if (!petId || !mensagem) {
-    return res.status(400).send('Campos obrigatórios ausentes');
+    return res.status(400).json({ erro: 'Campos obrigatórios ausentes' });
   }
 
   try {
@@ -38,10 +42,10 @@ app.post('/notifyFamily', async (req, res) => {
       timestamp: admin.firestore.FieldValue.serverTimestamp(),
     });
 
-    res.status(200).send('✅ Notificação enviada com sucesso!');
+    res.status(200).json({ sucesso: 'Notificação enviada com sucesso!' });
   } catch (error) {
     console.error('Erro ao salvar notificação:', error);
-    res.status(500).send(`❌ Erro: ${error.message}`);
+    res.status(500).json({ erro: error.message });
   }
 });
 
