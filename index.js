@@ -3,10 +3,17 @@ const cors = require('cors');
 const admin = require('firebase-admin');
 
 const app = express();
-app.use(cors());
+
+// ✅ Configuração de CORS para permitir chamadas do Flutter Web
+app.use(cors({
+  origin: true, // ou substitua por 'http://localhost:56085' se quiser restringir
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json());
 
-// Corrige a chave vinda da variável de ambiente
+// 🔐 Carrega e corrige a chave do Firebase vinda da variável de ambiente
 const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
 serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
@@ -14,9 +21,9 @@ admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-
 const db = admin.firestore();
 
+// 🚀 Rota principal
 app.post('/notifyFamily', async (req, res) => {
   const { petId, mensagem } = req.body;
 
@@ -38,6 +45,7 @@ app.post('/notifyFamily', async (req, res) => {
   }
 });
 
+// 🔊 Inicia o servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
