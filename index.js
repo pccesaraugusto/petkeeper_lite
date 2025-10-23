@@ -6,9 +6,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Inicializa o Firebase Admin com sua chave
-const raw = JSON.parse(process.env.FIREBASE_CONFIG);
-raw.private_key = raw.private_key.replace(/\\n/g, '\n');
+// Corrige a chave vinda da variável de ambiente
+const serviceAccount = JSON.parse(process.env.FIREBASE_CONFIG);
+serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -16,7 +16,6 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-// Rota principal
 app.post('/notifyFamily', async (req, res) => {
   const { petId, mensagem } = req.body;
 
@@ -38,7 +37,6 @@ app.post('/notifyFamily', async (req, res) => {
   }
 });
 
-// Porta dinâmica para Render
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
