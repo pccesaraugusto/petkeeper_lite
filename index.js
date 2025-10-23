@@ -6,7 +6,7 @@ const app = express();
 
 // ✅ Configuração de CORS para permitir chamadas do Flutter Web
 app.use(cors({
-  origin: ['http://localhost:57224', 'https://seu-dominio.com'], // ajuste conforme necessário
+  origin: ['http://localhost:57224', 'https://petkeeper-lite.onrender.com/'], // ajuste conforme necessário
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type'],
   credentials: true
