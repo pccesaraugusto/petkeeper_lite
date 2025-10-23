@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:petkeeper_lite/firebase/notify_family_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Telas do app
 import 'package:petkeeper_lite/screens/login_screen.dart';
 import 'package:petkeeper_lite/screens/tasks_screen.dart';
+import 'package:petkeeper_lite/screens/notify_family_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,12 +18,11 @@ void main() async {
       projectId: 'petkeepr-ad816',
       storageBucket: 'petkeepr-ad816.appspot.com',
       messagingSenderId: '317771367093',
-      appId:
-          '1:317771367093:web:6c5ed723c78b968c3c74fc', // ← corrigido para versão Web
+      appId: '1:317771367093:web:6c5ed723c78b968c3c74fc',
     ),
   );
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -55,9 +57,9 @@ class AuthGate extends StatelessWidget {
             body: Center(child: CircularProgressIndicator()),
           );
         } else if (snapshot.hasData) {
-          return const TasksScreen(); // Usuário logado
+          return const TasksScreen();
         } else {
-          return const LoginScreen(); // Usuário não logado
+          return const LoginScreen();
         }
       },
     );
