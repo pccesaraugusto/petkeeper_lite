@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../models/pet_model.dart';
 import '../models/task_model.dart';
@@ -16,23 +17,30 @@ class PetDetailScreen extends ConsumerWidget {
 
   Future<void> _notifyAndAddTask(BuildContext context) async {
     final firestore = FirebaseFirestore.instance;
-    final functions = FirebaseFunctions.instance;
     final taskId = const Uuid().v4();
 
     debugPrint('🔔 Iniciando notificação e criação de tarefa...');
 
     try {
-      // Etapa 1: Chamar função callable
-      debugPrint('📡 Chamando função notifyFamily...');
-      final callable = functions.httpsCallable('notifyFamily');
-      final result = await callable.call({
-        'petId': pet.id,
-        'message': 'Nova atualização para ${pet.name}',
-      });
+      // Etapa 1: Chamar API externa no Render
+      debugPrint('📡 Chamando API notifyFamily...');
+      final response = await http.post(
+        Uri.parse('https://petkeeper-lite.onrender.com/notifyFamily'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'petId': pet.id,
+          'mensagem': 'Nova atualização para ${pet.name}',
+        }),
+      );
 
-      debugPrint('✅ Notificação enviada: ${result.data}');
+      if (response.statusCode == 200) {
+        debugPrint('✅ Notificação enviada com sucesso!');
+      } else {
+        debugPrint('❌ Erro ao enviar notificação: ${response.statusCode}');
+        debugPrint('📄 Corpo da resposta: ${response.body}');
+      }
 
-      // Etapa 2: Criar tarefa
+      // Etapa 2: Criar tarefa no Firestore
       final novaTarefa = {
         'id': taskId,
         'title': 'Tomar banho',
